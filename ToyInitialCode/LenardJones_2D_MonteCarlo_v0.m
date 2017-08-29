@@ -1,4 +1,4 @@
-%made by Ishan Arora under Dr.Rane, IITGN, Gandhinagar
+%made by Ishan Arora under Dr.Rane, IITGN, Gandhinagar, India
 %We use 6-12 potentials, 
 %optimization tactics not employed yet
 %also need to improve readability of the code
