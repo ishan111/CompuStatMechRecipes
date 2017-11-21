@@ -9,3 +9,4 @@ Hopefully, the final versions of our code will be professional, efficient, reada
 23-10-2017 UPDATE: GC_TMMCv0.m is added. Its a toy GC-TMMC code, verified by similar plots of density of states of macro variable number of particles, obtained by histogram and by TMMC.
 
 20-11-2017 UPDATE: NEW REWRITTEN CODE ADDED FOR GC-TMMC. This code is more easily modified.
+21-11-2017 UPDATE: SPECIAL CODE  ADDED FOR HARD DISK SIMULATION. This turned out to be very straightforward and small code due to prior experiences and special nature of code.
