@@ -11,3 +11,5 @@ Hopefully, the final versions of our code will be professional, efficient, reada
 20-11-2017 UPDATE: NEW REWRITTEN CODE ADDED FOR GC-TMMC. This code is more easily modified.
 
 21-11-2017 UPDATE: SPECIAL CODE  ADDED FOR HARD DISK SIMULATION. This turned out to be very straightforward and small code due to prior experiences and special nature of code.
+
+28-11-2017 UPDATE: SPECIAL CODE ADDED FOR LJ FLUID SIMULATION. I am now using the single decision statement to do everything. No compartmentalization here.
