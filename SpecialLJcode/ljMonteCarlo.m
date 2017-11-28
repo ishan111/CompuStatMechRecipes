@@ -1,6 +1,6 @@
 % HD simulation
 mu = -2.16;
-Kb= 1; %1.38064852 × 10-23 m2 kg s-2 K-1
+Kb= 1; %1.38064852 Ã— 10-23 m2 kg s-2 K-1
 lambda = 1;
 T = .1;
 diaHD = 1;
