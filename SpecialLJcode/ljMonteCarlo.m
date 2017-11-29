@@ -1,18 +1,18 @@
 % HD simulation
 mu = -2.16;
-Kb= 1; %1.38064852 Ã— 10-23 m2 kg s-2 K-1
+Kb= 1; %1.38064852 × 10-23 m2 kg s-2 K-1
 lambda = 1;
 T = .1;
 diaHD = 1;
 len = [20 20 20];
 dimes = length(len) ;
-boundsNoP = [1 175];
-initNoP = 170 ;
+boundsNoP = [1 500];
+initNoP = 250 ;
 eps = 1 ;
 sig = 1 ;
 Interaction = @(dist) (eps.*((sig./dist).^12-(sig./dist).^6));
 
-noTrials = 1000000;
+noTrials = 10000000;
 moveProbs=[1 2];
 moveProbs = moveProbs./sum(moveProbs) ;
 moveProbs= cumsum(moveProbs);
@@ -25,7 +25,7 @@ nAtt = zeros(1,mTot);
 nAcc = zeros(1,mTot) ;
 % accProb_l = -E/(Kb*T) + mu/(Kb*T)- 3*log(lambda);
 accProb_l = log(.0115);
-readConf = true;
+readConf = false;
 if ~readConf
     switch dimes
         case 1
@@ -41,7 +41,12 @@ pNoHist=zeros(1,boundsNoP(2)-boundsNoP(1)+1);
 prodRun = true ;
 tmmcC = zeros(3,boundsNoP(2)-boundsNoP(1)+1);
 tmmcN = zeros(3,boundsNoP(2)-boundsNoP(1)+1);
-tmmcBias = false ;
+tmmcBias = true ;
+tmmcUpdateFreq = 10000 ;
+tmmcNupstart = 20000 ;
+tmmcCupstart = 10000 ;
+tmmcBiasStart= 50000;
+
 for trialNo = 1:noTrials
     mSelRand= rand();
     for moveNo = 1 : noMoves
@@ -83,12 +88,14 @@ for trialNo = 1:noTrials
                 %zz=exp(beta*mu)/lambda^3
                 %(pow(L,3) * zz)/(N+1)
                 accProb = accProb_l + log(prod(len)) - log (npNo) - dE / ( Kb * T);
-                accProb1 = min(exp(accProb),1);
-                tmmcC(1,pNo-boundsNoP(1)+1) =...
-                    tmmcC(1,pNo-boundsNoP(1)+1) + (accProb1) ;
-                tmmcC(2,pNo-boundsNoP(1)+1) =...
-                    tmmcC(2,pNo-boundsNoP(1)+1) + 1 - (accProb1) ;
-                if tmmcBias && trialNo > 50000 && tmmcN(1,pNo-boundsNoP(1)+1)~=0
+                if trialNo > tmmcCupstart
+                    accProb1 = min(exp(accProb),1);
+                    tmmcC(1,pNo-boundsNoP(1)+1) =...
+                        tmmcC(1,pNo-boundsNoP(1)+1) + (accProb1) ;
+                    tmmcC(2,pNo-boundsNoP(1)+1) =...
+                        tmmcC(2,pNo-boundsNoP(1)+1) + 1 - (accProb1) ;
+                end
+                if tmmcBias && trialNo > tmmcBiasStart && tmmcN(1,pNo-boundsNoP(1)+1)~=0
                     bias = tmmcN(3,npNo-boundsNoP(1)+1)/tmmcN(1,pNo-boundsNoP(1)+1);
                     bias = log(bias) ;
                 else
@@ -115,13 +122,15 @@ for trialNo = 1:noTrials
                 %exp(beta*mu)/lambda^3
                 %N/(pow(L,3) * zz)
                 accProb = - accProb_l - log(prod(len)) + log(npNo +1) - dE / ( Kb * T) ;
-                accProb1 = min(exp(accProb),1);
-                tmmcC(3,pNo-boundsNoP(1)+1) =...
-                    tmmcC(3,pNo-boundsNoP(1)+1) + (accProb1) ;
-                tmmcC(2,pNo-boundsNoP(1)+1) =...
-                    tmmcC(2,pNo-boundsNoP(1)+1) + 1 - (accProb1) ;
+                if trialNo > tmmcCupstart
+                    accProb1 = min(exp(accProb),1);
+                    tmmcC(3,pNo-boundsNoP(1)+1) =...
+                        tmmcC(3,pNo-boundsNoP(1)+1) + (accProb1) ;
+                    tmmcC(2,pNo-boundsNoP(1)+1) =...
+                        tmmcC(2,pNo-boundsNoP(1)+1) + 1 - (accProb1) ;
+                end
                 % bias = P(t->tn)/P(tn->t)
-                if tmmcBias && trialNo > 50000 && tmmcN(3,pNo-boundsNoP(1)+1)~=0
+                if tmmcBias && trialNo > tmmcBiasStart && tmmcN(3,pNo-boundsNoP(1)+1)~=0
                     bias = tmmcN(1,npNo-boundsNoP(1)+1)/tmmcN(3,pNo-boundsNoP(1)+1);
                     bias = log(bias);
                 else
@@ -143,16 +152,17 @@ for trialNo = 1:noTrials
                 pNoHist(pNo-boundsNoP(1)+1)= pNoHist(pNo-boundsNoP(1)+1)+1;
             end
     end
-    if mod(trialNo,10000)
+    if mod(trialNo,tmmcUpdateFreq)==0 && trialNo>=tmmcNupstart 
         tmmcN=tmmcC./sum(tmmcC);
     end
 end
 figure(1)
-if dimes == 2
-    scatter(pConf(:,1),pConf(:,2));
-elseif dimes == 3
-    scatter3(pConf(:,1),pConf(:,2),pConf(:,3));
-end
+% if dimes == 2
+%     scatter(pConf(:,1),pConf(:,2));
+% elseif dimes == 3
+%     scatter3(pConf(:,1),pConf(:,2),pConf(:,3));
+% end
+% clf(2);
 figure(2)
 plot(boundsNoP(1):1:boundsNoP(2),log(pNoHist)-log(pNoHist(find(pNoHist,1)))*ones(1,length(pNoHist)),'r');
 hold on
