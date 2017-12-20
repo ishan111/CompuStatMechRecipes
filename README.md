@@ -13,3 +13,5 @@ Hopefully, the final versions of our code will be professional, efficient, reada
 21-11-2017 UPDATE: SPECIAL CODE  ADDED FOR HARD DISK SIMULATION. This turned out to be very straightforward and small code due to prior experiences and special nature of code.
 
 28-11-2017 UPDATE: SPECIAL CODE ADDED FOR LJ FLUID SIMULATION. I am now using the single decision statement to do everything. No compartmentalization here.
+
+20-11-2017 UPDATE: MODULAR UNBIASED CODE AND ONE FILE CODE FOR UNBIASED SIMULATION ADDED too much fluctuation in the particle histogram still. Concluded that scripts are much slower to be called than functions on MATLAB
