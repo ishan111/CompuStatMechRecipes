@@ -16,4 +16,4 @@ Hopefully, the final versions of our code will be professional, efficient, reada
 
 20-11-2017 UPDATE: MODULAR UNBIASED CODE AND ONE FILE CODE FOR UNBIASED SIMULATION ADDED too much fluctuation in the particle histogram still. Concluded that scripts are much slower to be called than functions on MATLAB
 
-01-01-2018 UPDATE: FORTRAN INCOMPLETE CODE: many functions still need to be defined, and too many variables are global as yet.
+01-01-2018 UPDATE: FORTRAN INCOMPLETE CODE many functions still need to be defined, and too many variables are global as yet.
