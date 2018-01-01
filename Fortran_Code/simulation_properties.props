@@ -1,0 +1,7 @@
+--------------Simulation Properties ----------------------
+no of trials 1000000
+move probability .25 1
+uses tmmc bias = .true.
+TMMC Begin Collection 100000
+tmmc bias start = 150000
+particle number bounds 1 400

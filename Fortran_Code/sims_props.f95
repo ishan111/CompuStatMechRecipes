@@ -1,5 +1,5 @@
 module sims_props
-  integer :: noTrials
+  integer :: noTrials, trialNo
   integer,allocatable, dimension(:) :: nAtt,nAcc
   !move thing
   integer :: mDisp = 1
