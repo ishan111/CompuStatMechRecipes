@@ -18,4 +18,4 @@ Hopefully, the final versions of our code will be professional, efficient, reada
 
 01-01-2018 UPDATE: FORTRAN INCOMPLETE CODE many functions still need to be defined, and too many variables are global as yet.
 
-06-06-2017 UPDATE: MATLAB ISING MODEL TMMC CODE WAS INCLUDED
+06-06-2017 UPDATE: MATLAB ISING MODEL TMMC CODE WAS INCLUDED tmmc implementation is for 1D only, for Magnetization and for Energy in seperate files
